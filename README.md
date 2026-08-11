@@ -31,4 +31,5 @@ The repository stores source packages only. Developing a skill here does not ins
 
 [`INSTALL_PROMPT.md`](INSTALL_PROMPT.md) contains a copy-and-paste installation prompt. It makes the executing agent inventory all skills, ask whether to install selected skills or all of them, ask for project or user-global scope, detect the active host's current discovery location, and install non-destructively.
 
-Before publishing, replace `{{REPOSITORY_URL}}` in the prompt with this repository's final public URL.
+Copy the prompt from [`INSTALL_PROMPT.md`](INSTALL_PROMPT.md) directly into your coding agent. You can also append custom instructions regarding target location or specific skills to install.
+
