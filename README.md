@@ -2,6 +2,22 @@
 
 A source repository for portable, reusable Agent Skills. Canonical skill sources live under [`skills/`](skills/) and follow the open Agent Skills format: each skill is a self-contained directory with a required `SKILL.md` and optional references, scripts, assets, and evaluations.
 
+## Quick Installation
+
+Copy and paste the prompt below into your AI coding agent (e.g. Claude, Gemini, Antigravity, Cursor, Windsurf):
+
+```text
+Install Agent Skills from this repository:
+https://github.com/ivanseibel/i-know-kung-fu
+
+Instructions for agent:
+1. Discover available skills in `skills/` (directories containing `SKILL.md`).
+2. List available skills and confirm with me which ones to install and the target scope (project `.agents/skills` or user-global), unless specified below.
+3. Copy selected skill folders completely into the target skills directory without executing scripts or silently overwriting existing files.
+
+[Extra instructions: e.g., target location, specific skills to install]
+```
+
 ## Available skills
 
 ### `goal-to-action`
@@ -26,10 +42,3 @@ python3 skills/goal-to-action/scripts/validate_graph.py \
 ```
 
 The repository stores source packages only. Developing a skill here does not install it into any agent host.
-
-## Agent-driven installation
-
-[`INSTALL_PROMPT.md`](INSTALL_PROMPT.md) contains a copy-and-paste installation prompt. It makes the executing agent inventory all skills, ask whether to install selected skills or all of them, ask for project or user-global scope, detect the active host's current discovery location, and install non-destructively.
-
-Copy the prompt from [`INSTALL_PROMPT.md`](INSTALL_PROMPT.md) directly into your coding agent. You can also append custom instructions regarding target location or specific skills to install.
-
