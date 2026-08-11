@@ -84,6 +84,22 @@
         "Restarts FRAME, BACKCAST, and DIVERGE without evidence that the strategy is unsettled.",
         "Challenges already delegated implementation choices merely to exercise the workflow."
       ]
+    },
+    {
+      "id": "resume-after-interrupted-reply",
+      "prompt": "Resume this discovery session. The interaction journal ends with operator response R7, while graph.session.last_processed_operator_event_id is R6.",
+      "workspace": "existing session with a valid graph, brief, and interaction-log.jsonl",
+      "expected": [
+        "Loads the graph and journal tail before relying on conversation history.",
+        "Processes R7 before asking a new question.",
+        "Updates the graph pointer to R7 after incorporating its structured meaning.",
+        "Preserves R7 verbatim in the append-only journal and avoids duplicate processing."
+      ],
+      "forbidden": [
+        "Ignores R7 because it is absent from the brief.",
+        "Asks a new discovery question before processing R7.",
+        "Regenerates the graph from the transcript."
+      ]
     }
   ]
 }

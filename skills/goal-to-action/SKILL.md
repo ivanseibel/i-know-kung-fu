@@ -17,14 +17,15 @@ Act as a rigorous strategic discovery consultant. Transform a desired outcome, c
 - Make every task traceable to a selected strategy and goal.
 - Separate attractiveness from evidence confidence. Avoid false precision and manufactured optimism.
 - Permit backtracking and a conclusion of `not_feasible`.
+- Persist every substantive operator reply before interpreting it; never depend on chat history for resumption.
 - Persist concise claims and rationales, never private chain-of-thought.
 - Remain independent of any vendor, model, IDE, browser, search product, or tool API.
 
 ## Start or resume a session
 
 1. Decide whether the current workspace is relevant to the goal. Inspect it only when relevant.
-2. Look for a matching session under `.strategy/` or an established repository discovery directory. When one exists, load `graph.json` first and then `brief.md`; load only references needed for the current phase.
-3. Otherwise create `.strategy/<session-slug>/` unless the user requests an ephemeral session. Initialize `graph.json` from [assets/graph-template.json](assets/graph-template.json). Create other artifacts only when useful.
+2. Look for a matching session under `.strategy/` or an established repository discovery directory. When one exists, load `graph.json`, then the tail of `interaction-log.jsonl`, then `brief.md`. Process any operator response newer than `session.last_processed_operator_event_id` before continuing.
+3. Otherwise create `.strategy/<session-slug>/` unless the user requests an ephemeral session. Initialize `graph.json` from [assets/graph-template.json](assets/graph-template.json), create `interaction-log.jsonl` on the first interaction, and create other artifacts only when useful.
 4. Validate an existing graph with `scripts/validate_graph.py <path-to-graph.json>` when execution is available. The script is optional; continue with manual checks if it cannot run.
 5. Preserve stable IDs and increment `session.revision` on meaningful changes. Append a concise event to `history.jsonl`; do not regenerate the graph from scratch.
 
@@ -34,14 +35,15 @@ For exact persistence, provenance, and workspace rules, read [references/workspa
 
 Perform one meaningful phase, gate, or consequential decision at a time unless the user explicitly delegates autonomy and no critical unknown or human decision intervenes.
 
-1. Load the current graph and relevant evidence.
-2. Resolve researchable unknowns with the cheapest reliable available source before questioning the user.
-3. Execute the current phase and check its exit gate.
-4. Update `graph.json`, `brief.md`, relevant evidence, and `history.jsonl`.
-5. State what changed, the provisional conclusion, confidence, and any contradiction.
-6. Ask the smallest high-leverage question or request the decision needed next. Do not run a speculative questionnaire.
+1. On receiving a substantive operator reply, append it verbatim to `interaction-log.jsonl` before analysis or research.
+2. Load the current graph and relevant evidence. Reconcile any unprocessed operator event from the journal.
+3. Resolve researchable unknowns with the cheapest reliable available source before questioning the user.
+4. Execute the current phase and check its exit gate.
+5. Update `graph.json`, including `last_processed_operator_event_id`, then update `brief.md`, relevant evidence, and `history.jsonl`.
+6. State what changed, the provisional conclusion, confidence, and any contradiction.
+7. Before asking the next high-leverage question, append the question and its purpose to `interaction-log.jsonl` and set `pending_prompt_id`. Do not run a speculative questionnaire.
 
-Read [references/interaction-protocol.md](references/interaction-protocol.md) before asking consequential questions or requesting commitment.
+Read [references/interaction-protocol.md](references/interaction-protocol.md) before handling operator input, asking consequential questions, or requesting commitment.
 
 ## Follow the state machine
 

@@ -21,6 +21,8 @@ Use this reference when creating, mutating, validating, or resuming `graph.json`
 - `status`: normally `active`, `paused`, `ready`, `not_feasible`, or `closed`.
 - `revision`: positive integer incremented on meaningful graph changes.
 - `created_at`, `updated_at`: ISO 8601 timestamps when available.
+- `pending_prompt_id`: latest unanswered `agent_prompt` event ID, otherwise `null`.
+- `last_processed_operator_event_id`: latest `operator_response` already incorporated into the graph, otherwise `null`.
 
 ## Nodes
 
@@ -126,3 +128,21 @@ Write one JSON object per line to `history.jsonl`:
 ```
 
 Record high-level changes, phase transitions, consequential decisions, accepted risks, invalidating evidence, and feasibility conclusions—not every wording edit.
+
+## Interaction journal
+
+Keep `interaction-log.jsonl` append-only and distinct from graph history. Use stable event IDs within the session.
+
+Agent prompt:
+
+```json
+{"id":"Q1","type":"agent_prompt","at":"2026-01-01T12:00:00Z","phase":"FRAME","graph_revision":1,"purpose":"Clarify whether the income target must recur","text":"Must the €1,000 repeat every month?"}
+```
+
+Operator response:
+
+```json
+{"id":"R1","type":"operator_response","at":"2026-01-03T09:00:00Z","reply_to":"Q1","text":"Yes. I researched my taxes and need €1,450 gross.","attachments":[{"locator":"research/tax-notes.md","description":"Operator's tax calculation"}]}
+```
+
+Preserve operator text verbatim except explicit secret redaction. The graph stores its structured meaning; `history.jsonl` stores high-level model changes; `interaction-log.jsonl` supplies durable conversational recovery.

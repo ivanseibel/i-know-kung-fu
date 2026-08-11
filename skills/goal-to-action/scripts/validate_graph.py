@@ -102,6 +102,10 @@ def validate(path: Path) -> tuple[list[str], list[str]]:
     revision = session.get("revision")
     if not isinstance(revision, int) or isinstance(revision, bool) or revision < 1:
         errors.append("session.revision must be a positive integer")
+    for field in ("pending_prompt_id", "last_processed_operator_event_id"):
+        value = session.get(field)
+        if value is not None and not is_nonempty_string(value):
+            errors.append(f"session.{field} must be null or a non-empty string")
 
     nodes = graph.get("nodes")
     edges = graph.get("edges")

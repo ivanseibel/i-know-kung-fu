@@ -72,6 +72,12 @@ class ValidateGraphTests(unittest.TestCase):
         self.assertEqual([], errors)
         self.assertEqual([], warnings)
 
+    def test_interaction_pointer_must_be_string_or_null(self) -> None:
+        data = graph("FRAME", [], [])
+        data["session"]["last_processed_operator_event_id"] = 42
+        errors, _ = self.validate_data(data)
+        self.assertTrue(any("last_processed_operator_event_id" in error for error in errors))
+
     def test_open_critical_unknown_blocks_commit(self) -> None:
         data = graph(
             "COMMIT",

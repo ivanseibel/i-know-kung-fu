@@ -7,7 +7,9 @@
     "status": "active",
     "revision": 1,
     "created_at": "",
-    "updated_at": ""
+    "updated_at": "",
+    "pending_prompt_id": null,
+    "last_processed_operator_event_id": null
   },
   "nodes": [],
   "edges": []
