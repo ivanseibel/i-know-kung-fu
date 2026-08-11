@@ -1,0 +1,4 @@
+interface:
+  display_name: "Goal to Action"
+  short_description: "Turn uncertain goals into validated action plans"
+  default_prompt: "Use $goal-to-action to explore this goal, validate a strategy, and produce an execution-ready plan."

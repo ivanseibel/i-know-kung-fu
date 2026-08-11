@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "skill": "goal-to-action",
+  "cases": [
+    {
+      "id": "vague-income-goal",
+      "prompt": "I want to add €1,000 net per month to my income.",
+      "workspace": "empty",
+      "expected": [
+        "Enters FRAME and operationalizes net income, recurrence, horizon, baseline, resources, constraints, and preferences progressively.",
+        "Creates or proposes a Strategic Graph session as the canonical state.",
+        "Asks only the smallest material framing question needed next."
+      ],
+      "forbidden": [
+        "Immediately recommends freelancing, investing, SaaS, consulting, or another strategy.",
+        "Creates an execution task list before strategy commitment."
+      ]
+    },
+    {
+      "id": "immature-offline-capability",
+      "prompt": "I want this application to work effectively when the user temporarily loses connectivity, but I don't yet know what the right solution is.",
+      "workspace": "existing relevant repository with manifests, architecture, persistence code, and tests",
+      "expected": [
+        "Inspects targeted repository evidence before asking questions the code can answer.",
+        "Distinguishes the desired offline outcome from mechanisms such as caching, queues, service workers, or local storage.",
+        "Records repository observations as facts with provenance."
+      ],
+      "forbidden": [
+        "Immediately emits an offline-storage implementation plan.",
+        "Treats current code as proof of intended product behavior."
+      ]
+    },
+    {
+      "id": "critical-unknown-gate",
+      "prompt": "Continue into a full plan even though we still do not know whether the only permitted distribution channel can legally be used.",
+      "workspace": "any",
+      "expected": [
+        "Classifies the legal/channel question as a critical unknown with an appropriate resolution route.",
+        "Blocks COMMIT or DECOMPOSE unless the unknown is resolved or the user explicitly accepts an eligible risk.",
+        "Produces a research or validation action instead of pretending the strategy is ready."
+      ],
+      "forbidden": [
+        "Silently converts the unknown into an assumption.",
+        "Produces a full execution plan despite the blocked gate."
+      ]
+    },
+    {
+      "id": "infeasible-objective",
+      "prompt": "Achieve a result that requires at least €10,000 capital within one week, with a hard constraint of zero spending and no borrowing, grants, partners, or target/timing changes.",
+      "workspace": "empty",
+      "expected": [
+        "Eliminates every strategy that violates a hard constraint rather than lowering its score.",
+        "Reports not feasible under the current model after adequate divergence.",
+        "Identifies the minimal target, timing, resource, or method constraints that would need reconsideration without changing them automatically."
+      ],
+      "forbidden": [
+        "Invents an optimistic loophole unsupported by evidence.",
+        "Uses weighted scoring to compensate for a hard-constraint violation."
+      ]
+    },
+    {
+      "id": "invalidated-assumption",
+      "prompt": "The experiment failed: none of the target partners would make introductions, invalidating the selected partner-channel assumption. Update our strategy.",
+      "workspace": "existing session in VALIDATE or later with downstream work",
+      "expected": [
+        "Adds the experiment result as evidence and marks the assumption unsupported or rejected.",
+        "Marks dependent strategy, outcomes, and work stale as appropriate.",
+        "Returns to the earliest affected phase, normally EVALUATE or DIVERGE, and increments graph revision."
+      ],
+      "forbidden": [
+        "Only edits downstream tasks while preserving the invalid strategy.",
+        "Regenerates the graph and loses prior decisions or evidence."
+      ]
+    },
+    {
+      "id": "already-specified-implementation",
+      "prompt": "The architecture and requirements are approved in the attached spec. Break the implementation into engineering tasks using the selected sync engine and API contract.",
+      "workspace": "existing repository with complete approved specification",
+      "expected": [
+        "Does not activate strategic discovery automatically, or exits quickly after confirming the solution is already committed.",
+        "Hands the request to ordinary specification-driven planning or task decomposition."
+      ],
+      "forbidden": [
+        "Restarts FRAME, BACKCAST, and DIVERGE without evidence that the strategy is unsettled.",
+        "Challenges already delegated implementation choices merely to exercise the workflow."
+      ]
+    }
+  ]
+}
